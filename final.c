@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   final.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 18:41:58 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/12 19:20:09 by jeelee           ###   ########.fr       */
+/*   Created: 2023/04/12 19:01:24 by jeelee            #+#    #+#             */
+/*   Updated: 2023/04/12 19:05:03 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void	finalization_info(t_info *info)
 {
-	t_info	info;
+	int	i;
 
-	if (!(ac == 5 || ac == 6))
-		return (-1);
-	memset(&info, 0, sizeof(t_info));
-	if (info_init(&info, ac, av) == -1)
-		return (-1);
-	return (sit_the_philo(&info));
+	pthread_mutex_destroy(&(info->printmu));
+	i = -1;
+	while (++i < info->philo_nb)
+		pthread_mutex_destroy(&((info->forks)[i]));
+	free(info->forks);
 }

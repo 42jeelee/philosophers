@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/10 18:38:16 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/12 20:07:28 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,29 @@ long long	get_now_time(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000000 + tv.tv_usec);
+}
+
+void	print(char *msg, int id, t_info *info)
+{
+	long long	now;
+
+	now = get_now_time();
+	pthread_mutex_lock(&info->printmu);
+	if (!info->end)
+		printf("%lldms\t%d\t%s\n", \
+			now - info->start_time, id, msg);
+	pthread_mutex_unlock(&info->printmu);
+}
+
+void	tick_tock(int ms, t_info *info)
+{
+	long long	now;
+
+	while (!info->end)
+	{
+		now = get_now_time();
+		if (now - info->start_time >= ms)
+			break ;
+		usleep(10);
+	}
 }

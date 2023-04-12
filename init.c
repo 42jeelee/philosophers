@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:12:59 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/12 18:39:09 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/12 20:51:09 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,25 @@ int	info_init(t_info *info, int ac, char **av)
 		info->time_to_eat < 0 || info->time_to_sleep < 0 || info->each_philo_must_eat < 0)
 		return (-1);
 	return (mutex_init(info));
+}
+
+t_philo	*philo_init(t_info *info)
+{
+	t_philo	*philos;
+	int		i;
+
+	philos = (t_philo *)malloc(sizeof(t_philo) * info->philo_nb);
+	if (!philos)
+		return (NULL);
+	i = -1;
+	while (++i < info->philo_nb)
+	{
+		philos[i].id = i;
+		philos[i].lst_eat = info->start_time;
+		philos[i].eat_count = 0;
+		philos[i].left = &((info->forks)[i]);
+		philos[i].right = &((info->forks)[(i + 1) % info->philo_nb]);
+		philos[i].info = info;
+	}
+	return (philos);
 }
