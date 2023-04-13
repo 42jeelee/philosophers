@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 18:42:12 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/12 20:46:21 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/13 18:58:11 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_philo
 	int				eat_count;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
-	struct s_into	*info;
+	struct s_info	*info;
 }	t_philo;
 
 int			sit_the_philo(t_info *info);

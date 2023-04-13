@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/12 20:52:58 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/13 19:03:56 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	*ft_philosopher(void *arg)
 
 	philo = arg;
 	info = philo->info;
+	if (philo->id % 2)
+		usleep(100);
 	while (!info->end)
 	{
 		eating_spaghetti(philo, info);
@@ -74,6 +76,7 @@ void	*ft_philosopher(void *arg)
 		tick_tock(info->time_to_sleep, info);
 		print("is thinking", philo->id, info);
 	}
+	return (NULL);
 }
 
 int	sit_the_philo(t_info *info)
@@ -86,7 +89,7 @@ int	sit_the_philo(t_info *info)
 		return (-1);
 	i = -1;
 	while (++i < info->philo_nb)
-		pthread_create(philos[i].thread, NULL, \
+		pthread_create(&(philos[i].thread), NULL, \
 			ft_philosopher, &(philos[i]));
 	did_someone_die(philos, info);
 	i = -1;

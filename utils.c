@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/12 20:07:28 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/13 19:00:13 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print(char *msg, int id, t_info *info)
 	pthread_mutex_lock(&info->printmu);
 	if (!info->end)
 		printf("%lldms\t%d\t%s\n", \
-			now - info->start_time, id, msg);
+			now - info->start_time, id + 1, msg);
 	pthread_mutex_unlock(&info->printmu);
 }
 
