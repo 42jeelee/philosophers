@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 21:14:18 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:32:16 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	did_someone_die(t_philo *philos, t_info *info)
 {
 	int			i;
 	long long	now;
-	long long	starve_time;
+	long long	lst_eat;
 
 	while (!(info->end))
 	{
@@ -25,9 +25,9 @@ void	did_someone_die(t_philo *philos, t_info *info)
 		while (++i < info->philo_nb)
 		{
 			pthread_mutex_lock(&(philos[i].key));
-			starve_time = now - philos[i].lst_eat;
+			lst_eat = philos[i].lst_eat;
 			pthread_mutex_unlock(&(philos[i].key));
-			if (starve_time >= info->time_to_die)
+			if (now - lst_eat >= info->time_to_die)
 			{
 				print("died", philos[i].id, info);
 				pthread_mutex_lock(&(info->key));

@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 20:12:59 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 19:44:41 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:32:53 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_philo	*philo_init(t_info *info)
 		philos[i].eat_count = 0;
 		philos[i].left = &((info->forks)[i]);
 		philos[i].right = &((info->forks)[(i + 1) % info->philo_nb]);
-		if (pthread_mutex_init(&(info->key), NULL))
+		if (pthread_mutex_init(&(philos[i].key), NULL))
 		{
 			free(philos);
 			return (NULL);
