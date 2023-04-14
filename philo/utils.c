@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 16:02:36 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:14:37 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ int	ft_atoi(char *str)
 	return (n * m);
 }
 
+int	get_end(t_info *info)
+{
+	int	end;
+
+	pthread_mutex_lock(&(info->key));
+	end = info->end;
+	pthread_mutex_unlock(&(info->key));
+	return (end);
+}
+
 long long	get_now_time(void)
 {
 	struct timeval	tv;
@@ -48,19 +58,19 @@ void	print(char *msg, int id, t_info *info)
 
 	now = get_now_time();
 	pthread_mutex_lock(&info->printmu);
-	if (!info->end)
+	if (!get_end(info))
 		printf("%lldms\t%d\t%s\n", \
 			now - info->start_time, id + 1, msg);
 	pthread_mutex_unlock(&info->printmu);
 }
 
-void	tick_tock(int ms, t_info *info)
+void	tick_tock(int ms)
 {
 	long long	start;
 	long long	now;
 
 	start = get_now_time();
-	while (!info->end)
+	while (1)
 	{
 		now = get_now_time();
 		if (now - start >= ms)

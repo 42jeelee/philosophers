@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 19:31:57 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:14:18 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	did_someone_die(t_philo *philos, t_info *info)
 {
 	int			i;
 	long long	now;
+	long long	starve_time;
 
 	while (!(info->end))
 	{
@@ -23,10 +24,15 @@ void	did_someone_die(t_philo *philos, t_info *info)
 		i = -1;
 		while (++i < info->philo_nb)
 		{
-			if (now - philos[i].lst_eat >= info->time_to_die)
+			pthread_mutex_lock(&(philos[i].key));
+			starve_time = now - philos[i].lst_eat;
+			pthread_mutex_unlock(&(philos[i].key));
+			if (starve_time >= info->time_to_die)
 			{
 				print("died", philos[i].id, info);
+				pthread_mutex_lock(&(info->key));
 				info->end = 1;
+				pthread_mutex_unlock(&(info->key));
 				break ;
 			}
 		}
@@ -61,11 +67,15 @@ void	eating_spaghetti(t_philo *philo, t_info *info)
 		pthread_mutex_lock(philo->right);
 		print("has taken a fork", philo->id, info);
 		print("is eating", philo->id, info);
+		pthread_mutex_lock(&(philo->key));
 		philo->lst_eat = get_now_time();
 		philo->eat_count += 1;
-		tick_tock(info->time_to_eat, info);
+		pthread_mutex_unlock(&(philo->key));
+		tick_tock(info->time_to_eat);
 		pthread_mutex_unlock(philo->right);
 	}
+	else
+		usleep(info->time_to_die);
 	pthread_mutex_unlock(philo->left);
 }
 
@@ -78,7 +88,7 @@ void	*ft_philosopher(void *arg)
 	info = philo->info;
 	if (philo->id % 2)
 		usleep(100);
-	while (!info->end)
+	while (!get_end(info))
 	{
 		eating_spaghetti(philo, info);
 		if (philo->eat_count == info->each_philo_must_eat)
@@ -89,7 +99,7 @@ void	*ft_philosopher(void *arg)
 			break ;
 		}
 		print("is sleeping", philo->id, info);
-		tick_tock(info->time_to_sleep, info);
+		tick_tock(info->time_to_sleep);
 		print("is thinking", philo->id, info);
 	}
 	return (NULL);
@@ -111,7 +121,7 @@ int	sit_the_philo(t_info *info)
 	i = -1;
 	while (++i < info->philo_nb)
 		pthread_join(philos[i].thread, NULL);
-	finalization_info(info);
+	finalization_info(info, philos);
 	free(philos);
 	return (0);
 }

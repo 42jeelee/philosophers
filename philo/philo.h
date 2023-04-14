@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 18:42:12 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/13 18:58:11 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:13:53 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_info
 	long long		start_time;
 	int				end;
 	int				finished_eat;
+	pthread_mutex_t	key;
 	pthread_mutex_t	printmu;
 	pthread_mutex_t	*forks;
 }	t_info;
@@ -42,6 +43,7 @@ typedef struct s_philo
 	int				eat_count;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
+	pthread_mutex_t	key;
 	struct s_info	*info;
 }	t_philo;
 
@@ -51,9 +53,10 @@ int			info_init(t_info *info, int ac, char **av);
 t_philo		*philo_init(t_info *info);
 
 int			ft_atoi(char *str);
+int			get_end(t_info *info);
 long long	get_now_time(void);
 void		print(char *msg, int id, t_info *info);
-void		tick_tock(int ms, t_info *info);
-void		finalization_info(t_info *info);
+void		tick_tock(int ms);
+void		finalization_info(t_info *info, t_philo *philo);
 
 #endif

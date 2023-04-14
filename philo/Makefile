@@ -6,14 +6,14 @@
 #    By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 15:38:33 by jeelee            #+#    #+#              #
-#    Updated: 2023/04/14 15:38:53 by jeelee           ###   ########.fr        #
+#    Updated: 2023/04/14 20:59:26 by jeelee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	philo
 
 CC		=	CC
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -fsanitize=thread -g 
 
 SRC		=	main.c init.c philo.c utils.c final.c
 
