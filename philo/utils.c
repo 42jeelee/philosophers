@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/13 19:00:13 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 15:47:01 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ void	print(char *msg, int id, t_info *info)
 
 void	tick_tock(int ms, t_info *info)
 {
+	long long	start;
 	long long	now;
 
+	start = get_now_time();
 	while (!info->end)
 	{
 		now = get_now_time();
-		if (now - info->start_time >= ms)
+		if (now - start >= ms)
 			break ;
 		usleep(10);
 	}
