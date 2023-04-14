@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/13 19:03:56 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 16:26:05 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,27 @@ void	did_someone_die(t_philo *philos, t_info *info)
 	}
 }
 
+void	fst_take_fork(pthread_mutex_t **fst, pthread_mutex_t **sec, \
+	t_philo *philo)
+{
+	if (philo->id % 2)
+	{
+		*fst = philo->right;
+		*sec = philo->left;
+	}
+	else
+	{
+		*fst = philo->left;
+		*sec = philo->right;
+	}
+}
+
 void	eating_spaghetti(t_philo *philo, t_info *info)
 {
+	pthread_mutex_t	*fst;
+	pthread_mutex_t	*sec;
+
+	fst_take_fork(&fst, &sec, philo);
 	pthread_mutex_lock(philo->left);
 	print("has taken a fork", philo->id, info);
 	if (info->philo_nb > 1)
