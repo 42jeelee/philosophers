@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 19:22:53 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 19:31:57 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ void	did_someone_die(t_philo *philos, t_info *info)
 	int			i;
 	long long	now;
 
-	while (!info->end)
+	while (!(info->end))
 	{
-		if (!info->each_philo_must_eat && \
-			info->finished_eat == info->philo_nb)
-			info->end = 1;
 		now = get_now_time();
 		i = -1;
 		while (++i < info->philo_nb)
@@ -30,6 +27,7 @@ void	did_someone_die(t_philo *philos, t_info *info)
 			{
 				print("died", philos[i].id, info);
 				info->end = 1;
+				break ;
 			}
 		}
 	}
@@ -86,6 +84,8 @@ void	*ft_philosopher(void *arg)
 		if (philo->eat_count == info->each_philo_must_eat)
 		{
 			info->finished_eat++;
+			if (info->finished_eat == info->philo_nb)
+				info->end = 1;
 			break ;
 		}
 		print("is sleeping", philo->id, info);
