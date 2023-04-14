@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 21:32:16 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:38:40 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	eating_spaghetti(t_philo *philo, t_info *info)
 		philo->lst_eat = get_now_time();
 		philo->eat_count += 1;
 		pthread_mutex_unlock(&(philo->key));
-		tick_tock(info->time_to_eat);
+		tick_tock(info->time_to_eat, info);
 		pthread_mutex_unlock(philo->right);
 	}
 	else
@@ -99,7 +99,7 @@ void	*ft_philosopher(void *arg)
 			break ;
 		}
 		print("is sleeping", philo->id, info);
-		tick_tock(info->time_to_sleep);
+		tick_tock(info->time_to_sleep, info);
 		print("is thinking", philo->id, info);
 	}
 	return (NULL);

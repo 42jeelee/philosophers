@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 21:14:37 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:38:19 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	print(char *msg, int id, t_info *info)
 	pthread_mutex_unlock(&info->printmu);
 }
 
-void	tick_tock(int ms)
+void	tick_tock(int ms, t_info *info)
 {
 	long long	start;
 	long long	now;
 
 	start = get_now_time();
-	while (1)
+	while (!get_end(info))
 	{
 		now = get_now_time();
 		if (now - start >= ms)

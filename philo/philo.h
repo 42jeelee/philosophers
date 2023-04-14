@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 18:42:12 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 21:13:53 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:38:51 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			ft_atoi(char *str);
 int			get_end(t_info *info);
 long long	get_now_time(void);
 void		print(char *msg, int id, t_info *info);
-void		tick_tock(int ms);
+void		tick_tock(int ms, t_info *info);
 void		finalization_info(t_info *info, t_philo *philo);
 
 #endif
