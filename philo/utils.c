@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 19:46:17 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 15:47:01 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 16:02:36 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long long	get_now_time(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000 + tv.tv_usec);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 void	print(char *msg, int id, t_info *info)
