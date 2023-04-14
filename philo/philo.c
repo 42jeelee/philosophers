@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 21:38:40 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 22:45:30 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	eating_spaghetti(t_philo *philo, t_info *info)
 		pthread_mutex_unlock(philo->right);
 	}
 	else
-		usleep(info->time_to_die);
+		tick_tock(info->time_to_die, info);
 	pthread_mutex_unlock(philo->left);
 }
 
