@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 19:05:24 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/14 16:26:05 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/14 19:22:53 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,14 @@ void	did_someone_die(t_philo *philos, t_info *info)
 		if (!info->each_philo_must_eat && \
 			info->finished_eat == info->philo_nb)
 			info->end = 1;
-		else
+		now = get_now_time();
+		i = -1;
+		while (++i < info->philo_nb)
 		{
-			now = get_now_time();
-			i = -1;
-			while (++i < info->philo_nb)
+			if (now - philos[i].lst_eat >= info->time_to_die)
 			{
-				if (now - philos[i].lst_eat >= info->time_to_die)
-				{
-					print("died", philos[i].id, info);
-					info->end = 1;
-				}
+				print("died", philos[i].id, info);
+				info->end = 1;
 			}
 		}
 	}
