@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   final.c                                            :+:      :+:    :+:   */
+/*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 20:11:39 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 20:21:59 by jeelee           ###   ########.fr       */
+/*   Created: 2023/04/16 22:05:02 by jeelee            #+#    #+#             */
+/*   Updated: 2023/04/16 22:50:14 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*fail_fork_init(t_philo *philos, int size)
+int	get_the_end(t_info *info)
 {
-	int	i;
+	int	the_end;
 
-	i = -1;
-	while (++i < size)
-		pthread_mutex_destroy(&(philos[i]).l_fork);
-	free(philos);
-	return (NULL);
+	pthread_mutex_lock(&info->endmu);
+	the_end = info->the_end;
+	pthread_mutex_unlock(&info->endmu);
+	return (the_end);
 }
 
-int	fail_philo_init(t_info *info)
+void	is_ending(t_info *info)
 {
-	pthread_mutex_destroy(&info->info_key);
-	pthread_mutex_destroy(&info->printmu);
-	retrun (-1);
+	pthread_mutex_lock(&info->endmu);
+	info->the_end = 1;
+	pthread_mutex_unlock(&info->endmu);
+}
+
+void	im_full(t_info *info)
+{
+	pthread_mutex_lock(&info->info_key);
+	info->finished_philo += 1;
+	pthread_mutex_unlock(&info->info_key);
 }

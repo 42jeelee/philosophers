@@ -6,11 +6,29 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:45:21 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 20:24:36 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/16 22:31:58 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	info_mutex_init(t_info *info)
+{
+	if (pthread_mutex_init(&info->info_key, NULL))
+		return (-1);
+	if (pthread_mutex_init(&info->printmu, NULL))
+	{
+		pthread_mutex_destroy(&info->info_key);
+		return (-1);
+	}
+	if (pthread_mutex_init(&info->endmu, NULL))
+	{
+		pthread_mutex_destroy(&info->info_key);
+		pthread_mutex_destroy(&info->printmu);
+		return (-1);
+	}
+	return (0);
+}
 
 int	info_init(t_info *info, int ac, char **av)
 {
@@ -28,14 +46,7 @@ int	info_init(t_info *info, int ac, char **av)
 		if (info->each_must_eat < 0)
 			return (-1);
 	}
-	if (pthread_mutex_init(&info->info_key, NULL))
-		return (-1);
-	if (pthread_mutex_init(&info->printmu, NULL))
-	{
-		pthread_mutex_destroy(&info->info_key);
-		return (-1);
-	}
-	return (0);
+	return (info_mutex_init(info));
 }
 
 t_philo	*philo_init(t_info *info)
@@ -54,6 +65,11 @@ t_philo	*philo_init(t_info *info)
 		philos[i].lst_eat = get_now_time();
 		if (pthread_mutex_init(&(philos[i].l_fork), NULL))
 			return (fail_fork_init(philos, i));
+		if (pthread_mutex_init(&(philos[i].philo_key), NULL))
+		{
+			pthread_mutex_destroy(&philos[i].l_fork);
+			return (fail_fork_init(philos, i));
+		}
 		philos[i].r_fork = philos[(i + 1) % info->philo_nb].l_fork;
 		philos[i].info = info;
 	}
