@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:45:21 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:31:58 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:01:30 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	info_mutex_init(t_info *info)
 
 int	info_init(t_info *info, int ac, char **av)
 {
-	memset(&info, 0, sizeof(t_info));
+	memset(info, 0, sizeof(t_info));
 	info->philo_nb = ft_power_atoi(av[1]);
 	info->time_to_die = ft_power_atoi(av[2]);
 	info->time_to_eat = ft_power_atoi(av[3]);
@@ -60,7 +60,7 @@ t_philo	*philo_init(t_info *info)
 	i = -1;
 	while (++i < info->philo_nb)
 	{
-		philos[i].id = id + 1;
+		philos[i].id = i + 1;
 		philos[i].eat_count = 0;
 		philos[i].lst_eat = get_now_time();
 		if (pthread_mutex_init(&(philos[i].l_fork), NULL))
@@ -70,7 +70,7 @@ t_philo	*philo_init(t_info *info)
 			pthread_mutex_destroy(&philos[i].l_fork);
 			return (fail_fork_init(philos, i));
 		}
-		philos[i].r_fork = philos[(i + 1) % info->philo_nb].l_fork;
+		philos[i].r_fork = &(philos[(i + 1) % info->philo_nb].l_fork);
 		philos[i].info = info;
 	}
 	return (philos);

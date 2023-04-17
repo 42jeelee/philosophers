@@ -6,25 +6,32 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:47:14 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:06:48 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	am_i_starve(t_philo *philo, t_info *info)
+void	who_starved(t_philo *philos, t_info *info)
 {
-	int			status;
+	int			i;
 	long long	now;
 
-	pthread_mutex_lock(&philo->philo_key);
-	now = get_now_time();
-	if (now - philo->lst_eat >= info->time_to_die)
+	while (get_the_end(info))
 	{
-		print("died", philo->id, info);
-		is_ending(info);
+		i = -1;
+		while (++i < info->philo_nb)
+		{
+			pthread_mutex_lock(&(philos[i].philo_key));
+			now = get_now_time();
+			if (now - philos[i].lst_eat >= info->time_to_die)
+			{
+				print("died", philos[i].id, info);
+				is_ending(info);
+			}
+			pthread_mutex_unlock(&(philos[i].philo_key));
+		}
 	}
-	pthread_mutex_unlock(&philo->philo_key);
 }
 
 void	eat_spaghetti(t_philo *philo, t_info *info)
@@ -36,7 +43,7 @@ void	eat_spaghetti(t_philo *philo, t_info *info)
 	philo->eat_count += 1;
 	pthread_mutex_unlock(&philo->philo_key);
 	tick_tock(info->time_to_eat, info);
-	put_fork(philo, info);
+	put_fork(philo);
 }
 
 void	*ft_philosopher(void *arg)
@@ -48,22 +55,32 @@ void	*ft_philosopher(void *arg)
 	info = philo->info;
 	while (!get_the_end(info))
 	{
-		if (am_i_starve(philo, info))
-		{
-			eat_spaghetti(philo, info);
-			if (philo->eat_count == info->each_must_eat)
-				is_ending(info);
-			sleeping(philo, info);
-			print("is thinking", philo->id, info);
-		}
+		eat_spaghetti(philo, info);
+		if (philo->eat_count == info->each_must_eat)
+			is_ending(info);
+		sleeping(philo, info);
+		print("is thinking", philo->id, info);
 	}
+	return (NULL);
 }
 
 int	sit_the_philos(t_info *info)
 {
 	t_philo	*philos;
+	int		i;
 
 	philos = philo_init(info);
 	if (!philos)
 		return (fail_philo_init(info));
+	info->start_time = get_now_time();
+	i = -1;
+	while (++i < info->philo_nb)
+		pthread_create(&(philos[i].thread), NULL, ft_philosopher, &(philos[i]));
+	who_starved(philos, info);
+	i = -1;
+	while (++i < info->philo_nb)
+		pthread_join(philos[i].thread, NULL);
+	final_philo_destroy(philos, info);
+	free(philos);
+	return (0);
 }

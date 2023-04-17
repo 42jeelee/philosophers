@@ -6,11 +6,31 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:11:39 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:32:25 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:05:13 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	final_info_destroy(t_info *info)
+{
+	pthread_mutex_destroy(&info->info_key);
+	pthread_mutex_destroy(&info->printmu);
+	pthread_mutex_destroy(&info->endmu);
+}
+
+void	final_philo_destroy(t_philo *philos, t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->philo_nb)
+	{
+		pthread_mutex_destroy(&(philos[i].philo_key));
+		pthread_mutex_destroy(&(philos[i].l_fork));
+
+	}
+}
 
 void	*fail_fork_init(t_philo *philos, int size)
 {
@@ -30,5 +50,5 @@ int	fail_philo_init(t_info *info)
 {
 	pthread_mutex_destroy(&info->info_key);
 	pthread_mutex_destroy(&info->printmu);
-	retrun (-1);
+	return (-1);
 }

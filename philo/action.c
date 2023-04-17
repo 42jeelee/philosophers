@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 22:14:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:29:05 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:03:19 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	take_fork(t_philo *philo, t_info *info)
 	}
 }
 
-void	put_fork(t_philo *philo, t_info *info)
+void	put_fork(t_philo *philo)
 {
 	if (philo->id % 2)
 	{

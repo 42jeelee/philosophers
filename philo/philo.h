@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:35:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:41:28 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:03:36 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,20 @@ t_philo		*philo_init(t_info *info);
 int			get_the_end(t_info *info);
 void		is_ending(t_info *info);
 
+int			sit_the_philos(t_info *info);
+
 int			ft_power_atoi(char *str);
 long long	get_now_time(void);
 void		tick_tock(int ms, t_info *info);
 void		print(char *msg, int id, t_info *info);
 
 void		take_fork(t_philo *philo, t_info *info);
-void		put_fork(t_philo *philo, t_info *info);
+void		put_fork(t_philo *philo);
 void		sleeping(t_philo *philo, t_info *info);
 
 void		*fail_fork_init(t_philo *philos, int size);
 int			fail_philo_init(t_info *info);
+void		final_info_destroy(t_info *info);
+void		final_philo_destroy(t_philo *philos, t_info *info);
 
 #endif
