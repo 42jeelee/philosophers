@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 18:45:43 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 19:50:45 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	who_starved(t_philo *philos, t_info *info)
 		while (++i < info->philo_nb)
 		{
 			pthread_mutex_lock(&(philos[i].philo_key));
-			now = get_now_time();
-			if (now - philos[i].lst_eat >= info->time_to_die)
+			if (philos[i].eat_count != info->each_must_eat)
 			{
-				print("died", philos[i].id, info);
-				is_ending(info);
+				now = get_now_time();
+				if (now - philos[i].lst_eat >= info->time_to_die)
+				{
+					print("died", philos[i].id, info);
+					is_ending(info);
+				}
 			}
 			pthread_mutex_unlock(&(philos[i].philo_key));
 		}
@@ -78,6 +81,8 @@ int	sit_the_philos(t_info *info)
 	t_philo	*philos;
 	int		i;
 
+	if (info->each_must_eat == 0)
+		return (0);
 	philos = philo_init(info);
 	if (!philos)
 		return (fail_philo_init(info));

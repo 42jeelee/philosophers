@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:45:21 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 12:01:30 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 19:39:54 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	info_init(t_info *info, int ac, char **av)
 		if (info->each_must_eat < 0)
 			return (-1);
 	}
+	else
+		info->each_must_eat = -1;
 	return (info_mutex_init(info));
 }
 
