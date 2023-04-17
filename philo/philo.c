@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 12:06:48 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:39:54 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	who_starved(t_philo *philos, t_info *info)
 	int			i;
 	long long	now;
 
-	while (get_the_end(info))
+	while (!get_the_end(info))
 	{
 		i = -1;
 		while (++i < info->philo_nb)
