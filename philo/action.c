@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 22:14:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 12:58:56 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 15:56:41 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	take_fork(t_philo *philo, t_info *info)
 {
-	if (philo->id % 2 && philo->id != info->philo_nb)
+	if (philo->id & 1)
 	{
 		pthread_mutex_lock(&philo->l_fork);
 		print("has taken a fork", philo->id, info);
@@ -32,7 +32,7 @@ void	take_fork(t_philo *philo, t_info *info)
 
 void	put_fork(t_philo *philo)
 {
-	if (philo->id % 2)
+	if (philo->id & 1)
 	{
 		pthread_mutex_unlock(philo->r_fork);
 		pthread_mutex_unlock(&philo->l_fork);

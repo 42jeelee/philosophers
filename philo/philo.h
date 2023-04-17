@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:35:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 12:03:36 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 16:12:33 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_philo		*philo_init(t_info *info);
 
 int			get_the_end(t_info *info);
 void		is_ending(t_info *info);
+void		im_full(t_info *info);
 
 int			sit_the_philos(t_info *info);
 

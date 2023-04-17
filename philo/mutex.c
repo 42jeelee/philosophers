@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 22:05:02 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/16 22:50:14 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 16:20:34 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ void	im_full(t_info *info)
 {
 	pthread_mutex_lock(&info->info_key);
 	info->finished_philo += 1;
+	if (info->finished_philo == info->philo_nb)
+		is_ending(info);
 	pthread_mutex_unlock(&info->info_key);
 }

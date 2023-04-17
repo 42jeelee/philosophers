@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:47:37 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 12:04:44 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 16:02:07 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	tick_tock(int ms, t_info *info)
 		now = get_now_time();
 		if (now - start >= ms)
 			break ;
-		usleep(10);
+		usleep(500);
 	}
 }
 
