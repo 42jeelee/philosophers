@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:47:37 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 16:02:07 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/17 19:24:16 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,16 @@
 int	ft_atoi(char *str)
 {
 	int	n;
-	int	m;
 
 	n = 0;
-	m = 1;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			m *= -1;
-		str++;
-	}
 	while ('0' <= *str && *str <= '9')
 	{
+		if (n == 214748364 && *str - '0' > 7)
+			return (-1);
 		n = (n * 10) + *str - '0';
 		str++;
 	}
-	return (n * m);
+	return (n);
 }
 
 int	ft_power_atoi(char *str)
@@ -40,8 +34,7 @@ int	ft_power_atoi(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (!(('0' <= str[i] && str[i] <= '9') || \
-			(str[i] == '-' || str[i] == '+')))
+		if (!(('0' <= str[i] && str[i] <= '9')))
 			return (-1);
 	}
 	return (ft_atoi(str));
