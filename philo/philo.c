@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/18 14:53:24 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/19 01:45:52 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	sit_the_philos(t_info *info)
 	t_philo	*philos;
 	int		i;
 
-	if (info->each_must_eat == 0 || info->time_to_eat == 0)
+	if (info->each_must_eat == 0)
 		return (0);
 	philos = philo_init(info);
 	if (!philos)
