@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 19:50:45 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:53:24 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*ft_philosopher(void *arg)
 		(info->philo_nb & 1 && philo->id == info->philo_nb))
 	{
 		print("is thinking", philo->id, info);
-		tick_tock(info->time_to_eat, info);
+		tick_tock(info->time_to_eat / 2, info);
 	}
 	while (!get_the_end(info))
 	{
@@ -71,7 +71,7 @@ void	*ft_philosopher(void *arg)
 			break ;
 		}
 		sleeping(philo, info);
-		print("is thinking", philo->id, info);
+		thinking(philo, info);
 	}
 	return (NULL);
 }
@@ -81,7 +81,7 @@ int	sit_the_philos(t_info *info)
 	t_philo	*philos;
 	int		i;
 
-	if (info->each_must_eat == 0)
+	if (info->each_must_eat == 0 || info->time_to_eat == 0)
 		return (0);
 	philos = philo_init(info);
 	if (!philos)

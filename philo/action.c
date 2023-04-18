@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 22:14:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 19:02:58 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:51:09 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,11 @@ void	sleeping(t_philo *philo, t_info *info)
 {
 	print("is sleeping", philo->id, info);
 	tick_tock(info->time_to_sleep, info);
+}
+
+void	thinking(t_philo *philo, t_info *info)
+{
+	print("is thinking", philo->id, info);
+	if (!info->time_to_sleep)
+		tick_tock(50, info);
 }

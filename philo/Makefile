@@ -6,7 +6,7 @@
 #    By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 11:59:12 by jeelee            #+#    #+#              #
-#    Updated: 2023/04/17 16:01:10 by jeelee           ###   ########.fr        #
+#    Updated: 2023/04/18 14:46:14 by jeelee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ clean	:
 fclean	:	clean
 	@rm -f $(NAME)
 
-re		:	| fclean all
+re		:
+	@make fclean
+	@make all
 
 .PHONY	:	all clean fclean re

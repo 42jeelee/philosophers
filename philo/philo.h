@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:35:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 18:43:49 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:50:37 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		print(char *msg, int id, t_info *info);
 void		take_fork(t_philo *philo, t_info *info);
 void		put_fork(t_philo *philo);
 void		sleeping(t_philo *philo, t_info *info);
+void		thinking(t_philo *philo, t_info *info);
 
 void		*fail_fork_init(t_philo *philos, int size);
 int			fail_philo_init(t_info *info);
