@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/19 01:45:52 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/15 12:54:20 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void	*ft_philosopher(void *arg)
 	{
 		eat_spaghetti(philo, info);
 		if (philo->eat_count == info->each_must_eat)
-		{
 			im_full(info);
-			break ;
-		}
 		sleeping(philo, info);
 		thinking(philo, info);
 	}
