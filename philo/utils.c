@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:47:37 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/19 00:12:54 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/15 12:52:03 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 int	ft_atoi(char *str)
 {
-	int	n;
+	long long	n;
 
 	n = 0;
 	while ('0' <= *str && *str <= '9')
 	{
-		if (n == 214748364 && *str - '0' > 7)
+		if (n >= 214748365)
 			return (-1);
 		n = (n * 10) + *str - '0';
 		str++;
 	}
+	if (n > 2147483647)
+		return (-1);
 	return (n);
 }
 
