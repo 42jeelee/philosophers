@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:45:21 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/17 19:39:54 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:32:21 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ t_philo	*philo_init(t_info *info)
 			pthread_mutex_destroy(&philos[i].l_fork);
 			return (fail_fork_init(philos, i));
 		}
+		philos[i].l_fork_data = 1;
 		philos[i].r_fork = &(philos[(i + 1) % info->philo_nb].l_fork);
+		philos[i].r_fork_data = &(philos[(i + 1) % info->philo_nb].l_fork_data);
 		philos[i].info = info;
 	}
 	return (philos);

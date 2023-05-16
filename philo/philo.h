@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:35:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/04/18 14:50:37 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:30:53 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_philo
 	pthread_mutex_t	philo_key;
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	*r_fork;
+	int				l_fork_data;
+	int				*r_fork_data;
 	struct s_info	*info;
 }	t_philo;
 
