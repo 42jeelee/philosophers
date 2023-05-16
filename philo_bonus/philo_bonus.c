@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:29:16 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 22:01:06 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 19:42:12 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	ft_philosopher(t_philo *philo, t_info *info)
 		if (philo->eat_count == info->each_must_eat)
 			sem_post(info->full);
 		sleeping(philo, info);
-		print("is thinking", philo, info);
+		thinking(philo, info);
 	}
+	exit(0);
 }
 
 int	sit_the_philos(t_info *info)
@@ -33,7 +34,7 @@ int	sit_the_philos(t_info *info)
 
 	philos = philos_init(info);
 	if (!philos)
-		return (-1);
+		return (1);
 	i = -1;
 	while (++i < info->philo_nb)
 	{
@@ -41,10 +42,7 @@ int	sit_the_philos(t_info *info)
 		if (philos[i].pid == -1)
 			all_kill(philos, info, 1);
 		else if (philos[i].pid == 0)
-		{
 			ft_philosopher(&(philos[i]), info);
-			exit(0);
-		}
 	}
 	observers(philos, info);
 	i = -1;

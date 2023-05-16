@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:29:00 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 21:22:46 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 19:59:56 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	all_kill(t_philo *philos, t_info *info, int retno)
 void	who_is_died(t_philo *philos, t_info *info)
 {
 	sem_wait(info->e);
+	sem_wait(info->p);
 	all_kill(philos, info, 0);
 }
 
@@ -46,17 +47,22 @@ void	observers(t_philo *philos, t_info *info)
 	pthread_t	is_full;
 
 	if (pthread_create(&is_full, NULL, everyone_is_full, info))
-		exit(1);
+		all_kill(philos, info, 1);
 	who_is_died(philos, info);
 	if (pthread_join(is_full, NULL))
-		exit(1);
+		all_kill(philos, info, 1);
 }
 
 int	philo_starved(t_philo *philo, t_info *info)
 {
 	if (get_now_time() - philo->lst_eat >= info->time_to_die)
 	{
-		sem_post(info->e);
+		if (!philo->died)
+		{
+			print("died", philo, info);
+			sem_post(info->e);
+			(philo->died)++;
+		}
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:00:55 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 22:11:27 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:24:43 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			sit_the_philos(t_info *info);
 
 void		eating(t_philo *philo, t_info *info);
 void		sleeping(t_philo *philo, t_info *info);
+void		thinking(t_philo *philo, t_info *info);
 
 void		all_kill(t_philo *philos, t_info *info, int retno);
 void		observers(t_philo *philos, t_info *info);

@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:18:53 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 21:56:30 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 18:04:09 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ long long	get_now_time(void)
 void	print(char *msg, t_philo *philo, t_info *info)
 {
 	sem_wait(info->p);
-	if (philo_starved(philo, info))
-		printf("%lld %d %s\n", \
-			get_now_time() - info->start_time, philo->id, msg);
+	printf("%lld %d %s\n", get_now_time() - info->start_time, philo->id, msg);
 	sem_post(info->p);
 }
 
