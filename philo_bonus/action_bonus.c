@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:10:14 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 21:01:04 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:35:35 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	eating(t_philo *philo, t_info *info)
 			sem_post(info->f);
 		}
 		else
-			usleep(info->time_to_die);
+			tick_tock(info->time_to_die, philo, info);
 		sem_post(info->f);
 	}
 }
