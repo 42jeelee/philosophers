@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 20:17:03 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 12:54:20 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 22:12:58 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ void	*ft_philosopher(void *arg)
 	info = philo->info;
 	if (!(philo->id & 1) || \
 		(info->philo_nb & 1 && philo->id == info->philo_nb))
-	{
-		print("is thinking", philo->id, info);
 		tick_tock(info->time_to_eat / 2, info);
-	}
 	while (!get_the_end(info))
 	{
 		eat_spaghetti(philo, info);
