@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 19:47:37 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/15 12:52:03 by jeelee           ###   ########.fr       */
+/*   Created: 2023/05/15 16:18:53 by jeelee            #+#    #+#             */
+/*   Updated: 2023/05/16 18:04:09 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_atoi(char *str)
 {
@@ -50,25 +50,24 @@ long long	get_now_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	tick_tock(int ms, t_info *info)
+void	print(char *msg, t_philo *philo, t_info *info)
+{
+	sem_wait(info->p);
+	printf("%lld %d %s\n", get_now_time() - info->start_time, philo->id, msg);
+	sem_post(info->p);
+}
+
+void	tick_tock(int ms, t_philo *philo, t_info *info)
 {
 	long long	start;
 	long long	now;
 
 	start = get_now_time();
-	while (!get_the_end(info))
+	while (philo_starved(philo, info))
 	{
 		now = get_now_time();
 		if (now - start >= ms)
 			break ;
 		usleep(500);
 	}
-}
-
-void	print(char *msg, int id, t_info *info)
-{
-	pthread_mutex_lock(&info->printmu);
-	if (!get_the_end(info))
-		printf("%lld %d %s\n", get_now_time() - info->start_time, id, msg);
-	pthread_mutex_unlock(&info->printmu);
 }

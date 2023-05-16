@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 19:45:21 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 20:32:21 by jeelee           ###   ########.fr       */
+/*   Created: 2023/05/15 16:17:27 by jeelee            #+#    #+#             */
+/*   Updated: 2023/05/16 19:22:57 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-int	info_mutex_init(t_info *info)
+int	philo_sem_init(t_info *info)
 {
-	if (pthread_mutex_init(&info->info_key, NULL))
-		return (-1);
-	if (pthread_mutex_init(&info->printmu, NULL))
-	{
-		pthread_mutex_destroy(&info->info_key);
-		return (-1);
-	}
-	if (pthread_mutex_init(&info->endmu, NULL))
-	{
-		pthread_mutex_destroy(&info->info_key);
-		pthread_mutex_destroy(&info->printmu);
-		return (-1);
-	}
+	info->f = sem_open(PHILO_FORK, O_CREAT, 0644, info->philo_nb);
+	if (info->f == SEM_FAILED)
+		exit(1);
+	sem_unlink(PHILO_FORK);
+	info->p = sem_open(PRINT_SEM, O_CREAT, 0644, 1);
+	if (info->p == SEM_FAILED)
+		exit(1);
+	sem_unlink(PRINT_SEM);
+	info->e = sem_open(END_SEM, O_CREAT, 0644, 0);
+	if (info->e == SEM_FAILED)
+		exit(1);
+	sem_unlink(END_SEM);
+	info->full = sem_open(FULL_SEM, O_CREAT, 0644, 0);
+	if (info->full == SEM_FAILED)
+		exit(1);
+	sem_unlink(FULL_SEM);
 	return (0);
 }
 
@@ -48,10 +51,10 @@ int	info_init(t_info *info, int ac, char **av)
 	}
 	else
 		info->each_must_eat = -1;
-	return (info_mutex_init(info));
+	return (philo_sem_init(info));
 }
 
-t_philo	*philo_init(t_info *info)
+t_philo	*philos_init(t_info *info)
 {
 	t_philo	*philos;
 	int		i;
@@ -59,23 +62,14 @@ t_philo	*philo_init(t_info *info)
 	philos = (t_philo *)malloc(sizeof(t_philo) * info->philo_nb);
 	if (!philos)
 		return (NULL);
+	info->start_time = get_now_time();
 	i = -1;
 	while (++i < info->philo_nb)
 	{
 		philos[i].id = i + 1;
+		philos[i].pid = 0;
 		philos[i].eat_count = 0;
-		philos[i].lst_eat = get_now_time();
-		if (pthread_mutex_init(&(philos[i].l_fork), NULL))
-			return (fail_fork_init(philos, i));
-		if (pthread_mutex_init(&(philos[i].philo_key), NULL))
-		{
-			pthread_mutex_destroy(&philos[i].l_fork);
-			return (fail_fork_init(philos, i));
-		}
-		philos[i].l_fork_data = 1;
-		philos[i].r_fork = &(philos[(i + 1) % info->philo_nb].l_fork);
-		philos[i].r_fork_data = &(philos[(i + 1) % info->philo_nb].l_fork_data);
-		philos[i].info = info;
+		philos[i].lst_eat = info->start_time;
 	}
 	return (philos);
 }
