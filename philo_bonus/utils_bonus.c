@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:18:53 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 18:04:09 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:00:14 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ long long	get_now_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	print(char *msg, t_philo *philo, t_info *info)
+void	print(char *msg, t_philo *philo, t_info *info, int fin)
 {
 	sem_wait(info->p);
 	printf("%lld %d %s\n", get_now_time() - info->start_time, philo->id, msg);
-	sem_post(info->p);
+	if (!fin)
+		sem_post(info->p);
 }
 
 void	tick_tock(int ms, t_philo *philo, t_info *info)
