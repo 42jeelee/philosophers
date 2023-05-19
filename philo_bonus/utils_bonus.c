@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:18:53 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 21:00:14 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/19 16:19:32 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,16 @@ void	print(char *msg, t_philo *philo, t_info *info, int fin)
 		sem_post(info->p);
 }
 
-void	tick_tock(int ms, t_philo *philo, t_info *info)
+void	tick_tock(int ms)
 {
 	long long	start;
 	long long	now;
 
 	start = get_now_time();
-	while (philo_starved(philo, info))
+	now = start;
+	while (now - start < ms)
 	{
 		now = get_now_time();
-		if (now - start >= ms)
-			break ;
 		usleep(500);
 	}
 }

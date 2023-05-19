@@ -6,17 +6,23 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:29:16 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 19:42:12 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/19 16:26:12 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	ft_philosopher(t_philo *philo, t_info *info)
+void	ft_philosopher(t_philo *philo)
 {
+	pthread_t	reaper;
+	t_info		*info;
+
+	if (pthread_create(&reaper, NULL, philo_starved, philo))
+		exit(1);
+	info = philo->info;
 	if (philo->id <= info->philo_nb / 2)
-		tick_tock(info->time_to_eat, philo, info);
-	while (philo_starved(philo, info))
+		tick_tock(info->time_to_eat / 2);
+	while (1)
 	{
 		eating(philo, info);
 		if (philo->eat_count == info->each_must_eat)
@@ -42,7 +48,7 @@ int	sit_the_philos(t_info *info)
 		if (philos[i].pid == -1)
 			all_kill(philos, info, 1);
 		else if (philos[i].pid == 0)
-			ft_philosopher(&(philos[i]), info);
+			ft_philosopher(&(philos[i]));
 	}
 	observers(philos, info);
 	i = -1;

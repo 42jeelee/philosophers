@@ -6,24 +6,11 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:29:00 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 21:00:27 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/19 16:21:20 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	*everyone_is_full(void *arg)
-{
-	t_info	*info;
-	int		i;
-
-	info = (t_info *)arg;
-	i = -1;
-	while (++i < info->philo_nb)
-		sem_wait(info->full);
-	sem_post(info->e);
-	return (NULL);
-}
 
 void	all_kill(t_philo *philos, t_info *info, int retno)
 {
@@ -35,34 +22,50 @@ void	all_kill(t_philo *philos, t_info *info, int retno)
 	exit(retno);
 }
 
+void	*everyone_is_full(void *arg)
+{
+	t_philo	*philos;
+	t_info	*info;
+	int		i;
+
+	philos = (t_philo *)arg;
+	info = philos[0].info;
+	i = -1;
+	while (++i < info->philo_nb)
+		sem_wait(info->full);
+	all_kill(philos, info, 0);
+	return (NULL);
+}
+
 void	who_is_died(t_philo *philos, t_info *info)
 {
-	sem_wait(info->e);
-	all_kill(philos, info, 0);
+	int	status;
+
+	waitpid(-1, &status, 0);
+	all_kill(philos, info, status);
 }
 
 void	observers(t_philo *philos, t_info *info)
 {
 	pthread_t	is_full;
 
-	if (pthread_create(&is_full, NULL, everyone_is_full, info))
+	if (pthread_create(&is_full, NULL, everyone_is_full, philos))
 		all_kill(philos, info, 1);
 	who_is_died(philos, info);
 	if (pthread_join(is_full, NULL))
 		all_kill(philos, info, 1);
 }
 
-int	philo_starved(t_philo *philo, t_info *info)
+void	*philo_starved(void *arg)
 {
-	if (get_now_time() - philo->lst_eat >= info->time_to_die)
-	{
-		if (!philo->died)
-		{
-			print("died", philo, info, 1);
-			sem_post(info->e);
-			(philo->died)++;
-		}
-		return (0);
-	}
-	return (1);
+	t_philo	*philo;
+	t_info	*info;
+
+	philo = (t_philo *)arg;
+	info = philo->info;
+	while (get_now_time() - philo->lst_eat < info->time_to_die)
+		;
+	print("died", philo, info, 1);
+	exit(0);
+	return (NULL);
 }

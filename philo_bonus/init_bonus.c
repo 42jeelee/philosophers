@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:17:27 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/16 19:22:57 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/19 14:45:36 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ int	philo_sem_init(t_info *info)
 	if (info->p == SEM_FAILED)
 		exit(1);
 	sem_unlink(PRINT_SEM);
-	info->e = sem_open(END_SEM, O_CREAT, 0644, 0);
-	if (info->e == SEM_FAILED)
-		exit(1);
-	sem_unlink(END_SEM);
 	info->full = sem_open(FULL_SEM, O_CREAT, 0644, 0);
 	if (info->full == SEM_FAILED)
 		exit(1);
@@ -70,6 +66,7 @@ t_philo	*philos_init(t_info *info)
 		philos[i].pid = 0;
 		philos[i].eat_count = 0;
 		philos[i].lst_eat = info->start_time;
+		philos[i].info = info;
 	}
 	return (philos);
 }
