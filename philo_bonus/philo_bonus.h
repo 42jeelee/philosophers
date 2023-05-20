@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:00:55 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/19 16:19:47 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:20:50 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/time.h>
 
 # define PHILO_FORK "philo_fork"
+# define FORK_ACCESS "fork_access"
 # define PRINT_SEM "print_sem"
 # define FULL_SEM "full_sem"
 
@@ -35,6 +36,7 @@ typedef struct s_info
 	int			each_must_eat;
 	long long	start_time;
 	sem_t		*f;
+	sem_t		*f_a;
 	sem_t		*p;
 	sem_t		*full;
 }	t_info;
