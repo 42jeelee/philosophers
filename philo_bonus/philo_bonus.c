@@ -6,7 +6,7 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:29:16 by jeelee            #+#    #+#             */
-/*   Updated: 2023/05/19 16:26:12 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:18:44 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_philosopher(t_philo *philo)
 	t_info		*info;
 
 	if (pthread_create(&reaper, NULL, philo_starved, philo))
+		exit(1);
+	if (pthread_detach(reaper))
 		exit(1);
 	info = philo->info;
 	if (philo->id <= info->philo_nb / 2)
